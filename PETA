@@ -1,0 +1,79 @@
+
+<html>
+    <head>
+    <title> UAS SIG </title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
+         <!-- Make sure you put this AFTER Leaflet's CSS -->
+     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+     
+     <!-- Control Location Source/menentukan loksi user-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/src/L.Control.Locate.min.js" type="text/html">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.70.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    
+     <!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
+     <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+     <!-- Rotate marker -->
+     <script src="src/leaflet.rotatedMarker.js"></script>
+     
+    </head>
+    <style>
+    #map { height: 100%;
+            width: 100%;}
+
+    </style>
+    <body>
+     <div id="map"></div>
+     <script>
+        ///ini merupakan pusat peta kita berserta attributnya: ketinggian zoom dengan maks dan minimalnya///
+        var map = L.map('map',{
+        center: [-2.9882,104.7611], //pusat koordinat peta
+        zoom:7, //zoom default
+        minZoom: 7, // minimal zoom
+        maxZoom: 18, //maximal zoom
+        //maxBounds: bounds
+        });	
+        
+        var Att 	= '&copy; <a href="#">LeafletJs Ch.03</a> contributors' +'&copy;<a href="#">BabeCuaca</a>'; ////variabel atribution 
+        var Osm		= 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'; ///inilah ada basemap osm
+        var lyrOsm	= L.tileLayer(Osm,{attribution: Att});			//ini merupakan gabungan dari variabel link basemap dan attribution
+        
+        //kita akan membuat dua overlay sebagai berikit titik dan cicle yang akan muncul ketika diklik pada windows control layer////
+        var Almanan = L.marker([-2.979290,104.790200,11]);
+        var NurulIslam = L.marker([-2.978550,104.788280,11]);
+        var Baiturahma = L.marker([-2.977690,104.790650,11]);
+        var DarussalamPKP = L.marker([-2.976420,104.787440,11]);
+        var Abadan = L.marker([-2.981410,104.788630,11]);
+        var AlJihad = L.marker([-2.980120,104.784700,11]);
+        var SultanAgung = L.marker([-2.982190,104.793330,11]);
+        var AlIkhlas = L.marker([-2.981720,104.790460,11]);
+        var AlAzhar = L.marker([-2.979360,104.791800,11]);
+        var NurulAmal = L.marker([-2.976060,104.789570,11]);
+        
+        
+        //button/windows control layer//
+        var baseMaps= {
+        "OpenStreetMap": lyrOsm};
+        var overlayMaps = {
+        "Musholla Abadan": Abadan, 
+        "Musholla Al-Azhar": AlAzhar, 
+        "Masjid Al-Ikhlas": AlIkhlas, 
+        "Masjid Al-Jihad": AlJihad, 
+        "Musholla Al-Manan": Almanan, 
+        "Masjid Baiturahma": Baiturahma, 
+        "Musholla Darussalam PKP": DarussalamPKP, 
+        "Masjid Nurul Amal Cahaya Karya": NurulAmal, 
+        "Masjid Nurul Islam": NurulIslam, 
+        "Masjid Sultan Agung": SultanAgung};
+        
+        var ctrlLyr	= L.control.layers(baseMaps, overlayMaps,{collapsed:false}); //tombol pilihan layer pojok kanan atas
+        
+        var ctrlLoc	= L.control.locate({position: 'topleft',strings: {title: "Ini Posisi Anda!"}}); 	//posisi tombol lokasi user (Control Location) pada pojok kiri atas di bawah tombol zoom in/out
+        
+        lyrOsm.addTo(map); //ini default map yang tampil dan apabila tidak dipanggil map akan blank, jika dipanggil checklist pada list akan terchecked
+        ctrlLyr.addTo(map); //memanggil windows control layer dan menampilkan ke map
+        ctrlLoc.addTo(map); ///ini menampilkan tombol lokasi user/control location posisinya dibawah tombol zoom
+    
+    </script> 
+    </body>
+    </html>
